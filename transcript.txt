@@ -1,0 +1,47 @@
+Dentist: Good morning, how are you doing today?
+Patient: Morning, doctor. I’ve been having some discomfort on the lower left side for the past week.
+
+Dentist: I see. Can you describe the discomfort — is it sharp, dull, or more like pressure?
+Patient: It’s mostly a dull ache, but sometimes it gets sharper when I bite down.
+
+Dentist: Understood. Have you noticed any swelling, bleeding, or sensitivity to hot or cold?
+Patient: There’s a little swelling when I chew, and cold water makes it ache more.
+
+Dentist: Thanks for telling me. Any recent dental work on that side?
+Patient: Not recently, but I had a filling there about two years ago.
+
+Dentist: Okay. I’ll take a closer look now. Please open your mouth…
+(pauses while examining)
+I can see early signs of gum infection around tooth #19 and some plaque buildup. The filling looks intact, but the gum tissue is slightly inflamed.
+
+Patient: So is it serious?
+Dentist: It’s an early gum infection — not too serious yet, but if left untreated it could worsen into periodontal disease. We’ll manage it now to prevent progression.
+
+Patient: That’s a relief. What do I need to do?
+Dentist: I’ll prescribe an antibiotic today to help with the infection, and we’ll schedule a professional cleaning in about two weeks. That will remove plaque and tartar from under the gumline.
+
+Patient: Will the pain go away soon?
+Dentist: Yes, the antibiotic should reduce infection within 3–5 days. The cleaning will help with long-term relief. If pain worsens or swelling spreads, call us right away.
+
+Patient: Okay. Is there anything I should avoid eating?
+Dentist: Avoid very hard or sticky foods on that side for now. Soft foods are best. Also, rinse with warm salt water twice daily — it helps reduce inflammation.
+
+Patient: Got it. Should I change my brushing routine?
+Dentist: Continue brushing twice daily, but use a soft-bristled brush. Don’t brush too hard on the swollen area. Also, start flossing gently — plaque between teeth is often the cause of gum irritation.
+
+Patient: Makes sense. Do I need X-rays?
+Dentist: Since you had a filling before, I recommend a quick bitewing X-ray today. It will help us check if there’s any decay under the filling or bone loss around the tooth.
+
+Patient: Okay, let’s do it.
+(X-ray taken, a few minutes pass)
+
+Dentist: The X-ray looks good — no new cavities, and bone levels are normal. So we’ll continue with the antibiotic and cleaning plan.
+
+Patient: That’s reassuring. How long will the cleaning take?
+Dentist: The procedure usually takes about 45 minutes. You’ll feel fresher and the gums will start healing afterward.
+
+Patient: Sounds good. And after that, do I need follow-ups?
+Dentist: Yes, I recommend a follow-up check in about three months to make sure the infection hasn’t returned. Regular checkups every six months are ideal for prevention.
+
+Patient: Alright. Thank you, doctor, this helps a lot.
+Dentist: You’re welcome. I’ll have the front desk give you your prescription and schedule your cleaning. Take care, and let us know if anything changes.
