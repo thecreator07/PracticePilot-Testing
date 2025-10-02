@@ -130,3 +130,5 @@ cython_debug/
 
 # LSP config files
 pyrightconfig.json
+
+Patient_Report1.docx
