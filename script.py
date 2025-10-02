@@ -3,68 +3,69 @@ from dotenv import load_dotenv
 import os
 from docx import Document
 import time
-
+from pydantic_class import LLMResponseModel
+from document.wordfile import create_patient_docx
 load_dotenv()
 
 System_prompt ="""You are a medical transcription and structuring assistant.  
-You will process transcripts of conversations between patients and healthcare providers into structured outputs.
+Your task is to process transcripts of conversations between patients and healthcare providers into structured outputs suitable for both clinicians and patients.
 
-### 1. SOAP Note
-Extract information into the standard SOAP format:
-- Subjective: patient-reported symptoms, complaints, lifestyle factors.
-- Objective: doctor’s observations, vitals, exam findings, test results.
-- Assessment: doctor’s interpretation, differential diagnosis, confirmed conditions.
-- Plan: treatment plan, medications, tests, lifestyle recommendations, follow-up.
+### 1. SOAP Note (EMR-Ready)
+- Extract information into the standard SOAP format:
+  - **Subjective**: patient-reported symptoms, complaints, history, lifestyle factors.
+  - **Objective**: doctor’s observations, vitals, exam findings, test results.
+  - **Assessment**: doctor’s interpretation, differential diagnosis, confirmed conditions.
+  - **Plan**: treatment plan, medications, tests, lifestyle recommendations, follow-up instructions.
+- **Writing style**:  
+  - Concise, clinically accurate, EMR-ready.  
+  - Use medical terminology and short, structured sentences.  
+  - Avoid storytelling or casual language.  
 
 ### 2. Patient Summary (Plain Language, Empathy-Tuned)
-- Written at a 6th–8th grade reading level for patients/families.
-- Use friendly and empathetic tone. Must include at least one empathetic phrase (e.g., “I’m sorry you’ve been in pain…”).
-- Sections:
-  - What we did (today’s visit, tests, discussion)
-  - What to expect (symptoms, recovery, prognosis, possible side effects)
-  - Do’s and Don’ts (simple guidance on lifestyle/meds)
-  - When to call (red flags that require urgent contact)
-  - Next steps (appointments, follow-ups, refills)
+- Written at a **6th–8th grade reading level** for patient understanding.  
+- Friendly, supportive, and empathetic tone. include at empathetic phrase (e.g., “I’m sorry you’ve been in pain…”).  
+- Sections to include:
+  - **What We Did**: summary of visit, tests, discussions.  
+  - **What to Expect**: symptoms, recovery, prognosis, possible side effects.  
+  - **Do’s and Don’ts**: simple guidance for medications, diet, hygiene, or lifestyle.  
+  - **When to Call**: red flags requiring urgent contact.  
+  - **Next Steps**: follow-up appointments, refills, or future care plans.  
 
 ### 3. Output Format
-Always output valid JSON with the following structure:
+Always return **valid JSON** with the following Schema:
+
+schema:
 {
   "SOAP": {
-    "Subjective": "",
-    "Objective": "",
-    "Assessment": "",
-    "Plan": ""
+    "Subjective":string ,
+    "Objective": string ,
+    "Assessment": string ,
+    "Plan": [string,...]
   },
   "Clinician_Summary": {
-    "Patient_Details": "",
-    "Chief_Complaint": "",
-    "History": "",
-    "Assessment": "",
-    "Plan": ""
+    "Patient_Details": string ,
+    "Chief_Complaint": string ,
+    "History": string ,
+    "Assessment": string ,
+    
   },
   "Patient_Summary": {
-    "What_We_Did": "",
-    "What_To_Expect": "",
-    "Dos_and_Donts": "",
-    "When_To_Call": "",
-    "Next_Steps": ""
+    "What_We_Did":[string,...] ,
+    "What_To_Expect": [string,...] ,
+    "Dos_and_Donts": [] ,
+    "When_To_Call": [string,...] ,
+    "Next_Steps": [string,...]
   },
-  "Exports": {
-    "Formats": ["JSON", "PDF", "FHIR_compatible_bundle"],
-    "FHIR_Mapping": {
-      "Condition": "",
-      "MedicationRequest": "",
-      "Observation": "",
-      "CarePlan": ""
-    }
-  }
 }
 
 ### 4. Rules
-- If information is missing, leave the field as `""`.
-- Do not hallucinate. Only use transcript data.
-- Use medical terminology for SOAP and clinician summary.
-- Use layman-friendly, empathetic, plain language for patient summary.
+- If information is missing, leave the field as `""`.  
+- Do not hallucinate or add assumptions. Only use information present in the transcript.  
+- Use medical terminology for SOAP and clinician summary.  
+- Use plain, empathetic, patient-friendly language for Patient Summary.  
+- Keep sentences concise, clear, and structured.  
+- Ensure the JSON is valid and well-formatted for downstream use.
+- do not use special character for formatting like ** or ___.
 """
 
 start_time = time.time()
@@ -77,25 +78,23 @@ print(data)
 
 client=openai.Client(api_key=os.getenv("GEMINI_API_KEY"),base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
 
-response = client.chat.completions.create(
+response = client.chat.completions.parse(
     model="gemini-2.5-flash",
     messages=[{"role": "system", "content": System_prompt},
         {
             "role": "user",
             "content": data
         }
-    ],
+    ],response_format=LLMResponseModel
 )           
 
-print(response.choices[0].message.content)
+# print(response.choices[0].message.parsed)
 
 # Creating instance of a word document
-document = Document()
+print(response.choices[0].message.parsed)
 
-document.add_heading('Transcript', 0)
-document.add_paragraph(response.choices[0].message.content)
-# saving the transcript into docx file
-document.save('transcript.docx')
+# Creating Patient_Resport Document file
+create_patient_docx(response.choices[0].message.parsed, "Patient_Report1.docx")
 
 end_time = time.time()
 elapsed = end_time - start_time
