@@ -74,7 +74,7 @@ start_time = time.time()
 with open("transcript.txt", "r", encoding="utf-8") as f:
     data = f.read()
 
-print(data)  
+print(data)
 
 client=openai.Client(api_key=os.getenv("GEMINI_API_KEY"),base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
 
