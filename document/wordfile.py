@@ -46,7 +46,7 @@ def create_patient_docx(llm_response: LLMResponseModel, output_path: str):
                 else:
                     doc.add_paragraph(item, style="Normal")
         else:
-            doc.add_paragraph("(No data)", style="Italic")
+            doc.add_paragraph("(No data)", style="Normal")
 
         if title!="none"and content.__len__()>1:
             doc.add_paragraph("") # Add a blank line after each section

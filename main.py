@@ -121,7 +121,7 @@ async def process_transcript(file: UploadFile = File(...)):
         parsed_data = response.choices[0].message.parsed
 
         # Create report docx
-        output_file = f"Patient_Report_{int(time.time())}.docx"
+        output_file = f"Patient_Report_1.docx"
         create_patient_docx(parsed_data, output_file)
 
         elapsed = time.time() - start_time
